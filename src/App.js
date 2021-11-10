@@ -14,11 +14,11 @@ function App() {
   }, [])
 
   useEffect(() => {
-    dict(word.word_string).then(res => {
-      setMeaning(res?.data[0]?.meanings[0])
-      setPhonetic(res?.data[0].phonetic)
-      console.log(res?.data[0])
-    })
+    if (word.word_string)
+      dict(word.word_string).then(res => {
+        setMeaning(res?.data[0]?.meanings[0])
+        setPhonetic(res?.data[0].phonetic)
+      })
   }, [word])
 
   const fetchWord = () => {
@@ -35,13 +35,11 @@ function App() {
 
           <div class="font-sans flex-row items-center justify-center bg-blue-darker w-full">
             {
-              meaning.definitions.map(def => {
+              meaning?.definitions?.map(def => {
                 return (
-                  <div class="overflow-hidden bg-white rounded w-full shadow-lg  leading-normal">
-                    <div href="#" class="block group p-4 border-b">
-                      <p class="font-bold text-lg mb-1 text-black">{def.definition}</p>
-                      <p class="text-grey-darker mb-2"> <i>eg.</i> {def.example}</p>
-                    </div>
+                  <div href="#" class="block group p-4 border-b">
+                    <p class="font-bold text-lg mb-1 text-black">{def.definition}</p>
+                    <p class="text-grey-darker mb-2"> <i>eg.</i> {def.example}</p>
                   </div>
                 )
               })
